@@ -1,0 +1,35 @@
+﻿@page "/User"
+@page "/User/{name}"
+@layout UserLayout
+@inject DataService data
+@using Beam.Shared
+
+<h2>User rays</h2>
+
+@foreach (var ray in Rays)
+{
+    <p>
+        <RayItem ray="@ray"/>
+    </p>
+}
+    
+@code{
+    [Parameter]
+    public string Name { get; set; }
+
+    List<Ray> Rays = new List<Ray>();
+
+    protected override void OnInitialized()
+    {
+        data.UpdatedRays += async () =>
+        {
+            Rays = await data.GetUserRays(Name);
+            StateHasChanged();
+        };
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Rays = await data.GetUserRays(Name);
+    }
+}
