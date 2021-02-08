@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net.Http.Json;
 using Beam.Shared;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace Beam.Client.Services
 {
-    public class BeamApiService
+    public class BeamApiService : IBeamApiService
     {
         HttpClient http;
 
@@ -63,3 +59,4 @@ namespace Beam.Client.Services
         }
     }
 }
+    
