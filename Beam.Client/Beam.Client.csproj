@@ -18,8 +18,4 @@
     <ProjectReference Include="..\Beam.Shared\Beam.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\js\" />
-  </ItemGroup>
-
 </Project>
