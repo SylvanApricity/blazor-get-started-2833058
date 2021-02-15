@@ -1,16 +1,19 @@
 @page "/frequency/{id:int}"
 @inject IDataService data
+@inject IJSRuntime jsRuntime
 
 <RayInput @bind-newRay="newRay" RayCast="@RayCast" />
 <div class="spinner-border" role="status" hidden="@HideLoading">
   <span class="sr-only">Loading...</span>
 </div>
-@foreach (var ray in data.Rays)
+<div @ref="RaysParent">
+@foreach (var ray in data.Rays.OrderByDescending(ray => ray.RayCastDate))
 {
-    <p>
+    <p class="ray">
         <RayItem ray="@ray" />
     </p>
 }
+</div>
 
 @code{
     [Parameter]
@@ -20,6 +23,7 @@
 
     public bool HideLoading { get; set; } = false;
 
+    ElementReference RaysParent { get; set; }
 
     protected override void OnParametersSet()
     {
@@ -30,6 +34,11 @@
     void UpdateForNewRays()
     {
         HideLoading = true;
+
+        var mostRecentRay = data.Rays.OrderByDescending(ray => ray.RayCastDate).First();
+
+        jsRuntime.InvokeVoidAsync("ShowLatestRay.findFirstRayAndHighlight", RaysParent);
+
         if (!data.Rays.Any(r => r.UserName == data.CurrentUser.Name))
             newRay.Text = $"Hello, my name is {data.CurrentUser.Name}";
         else
