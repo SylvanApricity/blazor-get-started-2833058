@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.JSInterop;
 
-namespace Beam.Client.Services
+namespace Beam.Animation.Services
 {
     public class AnimationService
     {

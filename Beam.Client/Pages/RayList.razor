@@ -7,6 +7,7 @@
   <span class="sr-only">Loading...</span>
 </div>
 <div @ref="RaysParent">
+    @*Order in the setter itself*@
 @foreach (var ray in data.Rays.OrderByDescending(ray => ray.RayCastDate))
 {
     <p class="ray">
@@ -37,6 +38,7 @@
 
         var mostRecentRay = data.Rays.OrderByDescending(ray => ray.RayCastDate).First();
 
+        //Better to put after re-rendering and have a boolean flag to trigger.
         jsRuntime.InvokeVoidAsync("ShowLatestRay.findFirstRayAndHighlight", RaysParent);
 
         if (!data.Rays.Any(r => r.UserName == data.CurrentUser.Name))
